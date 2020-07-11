@@ -1,0 +1,12 @@
+lfw-dataset/
+.idea
+__pycache__/
+
+models/*
+!models/.gitkeep
+results/
+new/*
+.ipynb_checkpoints/
+Datapipeline.ipynb
+*.png
+logs/
