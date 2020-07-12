@@ -44,7 +44,7 @@ import os
 import itertools
 
 #diretorio onde fica a pasta do dataset lfw-dataset
-DATA_PATH = '/mnt/c/Users/matheus.kumano/Desktop/Docker/notebooks/'
+DATA_PATH = '/home/jonas/'
 
 def get_data_transform():
     #base de dados
