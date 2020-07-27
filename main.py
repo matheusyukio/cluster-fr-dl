@@ -44,7 +44,8 @@ import os
 import itertools
 
 #diretorio onde fica a pasta do dataset lfw-dataset
-DATA_PATH = '/home/jonas/'
+#DATA_PATH = '/home/jonas/'
+DATA_PATH = '/mnt/c/Users/matheus.kumano/Desktop/Docker/notebooks/'
 
 def get_data_transform():
     #base de dados
@@ -404,6 +405,8 @@ def run_k_fold(multi_data, X, Y, CLASSES, epoch, MODEL, BATCH_SIZE, num_folds):
 
         callbacks_list = [checkpoint, earlystopping]
 
+        #https://github.com/keras-team/keras/issues/12120 - Training takes too long when I am using ImageDataGenerator with a generator #12120
+        #fit_generator
         history = model.fit(train_data_generator,
                             epochs=EPOCHS,
                             steps_per_epoch=train_data_generator.n // train_data_generator.batch_size,
@@ -415,6 +418,7 @@ def run_k_fold(multi_data, X, Y, CLASSES, epoch, MODEL, BATCH_SIZE, num_folds):
                             max_queue_size=BATCH_SIZE,                # maximum size for the generator queue
                             workers=12,                        # maximum number of processes to spin up when using process-based threading
                             use_multiprocessing=False
+                            #use_multiprocessing=True
                             )
 
         HISTORY.append(history)
@@ -491,13 +495,13 @@ def run_k_fold(multi_data, X, Y, CLASSES, epoch, MODEL, BATCH_SIZE, num_folds):
 
 
 def main():
-    epoch = 500
+    epoch = 1
     min_images_per_person = [30]  # [25,20]
-    models = ["LeNet5","VGGFace"]#,"AlexNet","LeNet5"] #["LeNet5","DeepFace","AlexNet"]#["DeepFace",AlexNet","LeNet5"]
+    models = ["LeNet5"]#,"VGGFace"]#,"AlexNet","LeNet5"] #["LeNet5","DeepFace","AlexNet"]#["DeepFace",AlexNet","LeNet5"]
     num_folds = 5
 
     #aumentando o batch para 30 DeepFace conseguiu bons resultados, testar com outras
-    batch_sizes = [30,60]  # [2,4,8]
+    batch_sizes = [30]#,60]  # [2,4,8]
     for min_per_person in min_images_per_person:
         for batch in batch_sizes:
             for model in models:
